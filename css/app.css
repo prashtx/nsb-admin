@@ -7,7 +7,7 @@ body {
   background:#d9e1ed;
   padding:0;
   color:#333;
-  font-family:"Source Sans Pro";
+  font-family:"Source Sans Pro", sans-serif;
 }
 /* Type ....................................................................*/
 a {
@@ -50,10 +50,10 @@ header a {
 }
 
 #site-header {
-  font-family:Pacifico;
-  font-size:18px;
+  font-size:20px;
   background:#476799;
   border-bottom:0px solid #a18464;
+  min-height: 30px;
 }
 
 #survey-header {
@@ -66,6 +66,12 @@ header a {
 
 #survey-header h2 {
   font-weight:bold;
+}
+
+#site-header .site-title {
+  font-family:Pacifico;
+  float: left;
+  padding-left: 10px;
 }
 
 /* Nav .....................................................................*/
@@ -94,4 +100,163 @@ header a {
 
 .nav-tabs li.active {
   background:#fff;
+}
+
+.nav {
+  margin-bottom: 18px;
+  margin-left: 0;
+  list-style: none;
+}
+
+.nav > li {
+  display: block;
+  float: left;
+}
+
+.nav > li > a {
+  display: block;
+}
+
+.nav > li > a:hover {
+  text-decoration: none;
+  background-color: #eeeeee;
+}
+
+.nav > .pull-right {
+  float: right;
+}
+
+#site-header .nav {
+  float: right;
+}
+
+#site-header .nav li {
+  padding: 0 5px 0 5px;
+}
+
+
+
+
+
+/* Grid System .............................................................*/
+.row {
+  margin-left: -20px;
+  *zoom: 1;
+}
+
+.row:before,
+.row:after {
+  display: table;
+  content: "";
+}
+
+.row:after {
+  clear: both;
+}
+
+[class*="span"] {
+  float: left;
+  margin-left: 20px;
+}
+
+.container,
+.navbar-fixed-top .container,
+.navbar-fixed-bottom .container {
+  width: 940px;
+}
+
+.span12 {
+  width: 940px;
+}
+
+.span11 {
+  width: 860px;
+}
+
+.span10 {
+  width: 780px;
+}
+
+.span9 {
+  width: 700px;
+}
+
+.span8 {
+  width: 620px;
+}
+
+.span7 {
+  width: 540px;
+}
+
+.span6 {
+  width: 460px;
+}
+
+.span5 {
+  width: 380px;
+}
+
+.span4 {
+  width: 300px;
+}
+
+.span3 {
+  width: 220px;
+}
+
+.span2 {
+  width: 140px;
+}
+
+.span1 {
+  width: 60px;
+}
+
+.offset12 {
+  margin-left: 980px;
+}
+
+.offset11 {
+  margin-left: 900px;
+}
+
+.offset10 {
+  margin-left: 820px;
+}
+
+.offset9 {
+  margin-left: 740px;
+}
+
+.offset8 {
+  margin-left: 660px;
+}
+
+.offset7 {
+  margin-left: 580px;
+}
+
+.offset6 {
+  margin-left: 500px;
+}
+
+.offset5 {
+  margin-left: 420px;
+}
+
+.offset4 {
+  margin-left: 340px;
+}
+
+.offset3 {
+  margin-left: 260px;
+}
+
+.offset2 {
+  margin-left: 180px;
+}
+
+.offset1 {
+  margin-left: 100px;
 }

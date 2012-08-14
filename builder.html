@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <style type="text/css" media="screen">
+      /*@import url("css/bootstrap.min.css");
+      @import url("css/bootstrap-responsive.min.css");*/
+      @import url("css/reset.css");
+      @import url("css/font-awesome.css");
+      @import url("css/app.css");
+      @import url("css/builder-qa.css");
+      @import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic,700italic);
+      @import url(http://fonts.googleapis.com/css?family=Pacifico);
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header id="site-header">
+      <div class="site-title"><a href="builder.html">localdata</a></div>
+      <ul class="nav">
+        <li><a href="#">Survey Builder</a></li>
+        <li><a href="#">Dashboard</a></li>
+      </ul>
+    </header>
+
+    <div id="container">
+      <div class="row">
+        <!-- Left-hand progress display -->
+        <div class="span1 offset1">
+          <div class="vline">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+          </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="span9 offset1">
+          <div class="builder-questions">
+            <div class="question"></div> <!-- /question -->
+            <div class="question"></div> <!-- /question -->
+            <div class="question"></div> <!-- /question -->
+          </div>
+        </div>
+      </div>
+
+      <div id="preview-sidebar">
+        Preview your survey
+      </div>
+    </div> <!-- /container -->
+    
+    <!-- Core scripts -->
+    <script type="text/javascript" src="js/lib/jquery-1.7.1.js"></script>    
+    <script type="text/javascript" src="js/lib/underscore.js"></script>    
+    <script type="text/javascript" src="js/lib/backbone.js"></script>
+    <script type="text/javascript" src="js/lib/backbone.paginator.js"></script>
+    <script type="text/javascript" src="js/lib/moment.min.js"></script>
+    
+    <!-- Templates ========================================================-->
+    <!-- Question .........................................................-->
+    <script type="text/template" id="t-question">
+      <div class="collapsed"><i class="icon-ok"> <%= shortQuestion %></i></div>
+      <div class="expanded">
+        <div class="row">
+          <div class="qa-content span8">
+            <%= fullQuestion %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="qa-content span8">
+            <div class="row">
+              <div class="span3"><img src="http://placekitten.com/100/100"></img></div>
+              <div class="span3"><img src="http://placekitten.com/100/100"></img></div>
+              <div class="span3"><img src="http://placekitten.com/100/100"></img></div>
+              <div class="span3"><img src="http://placekitten.com/100/100"></img></div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="span2 offset7 next">
+            NEXT <i class="icon-arrow-down"></i>
+          </div>
+        </div>
+      </div> <!-- /expanded -->
+    </script>
+    <!-- Home .............................................................-->
+    <script type="text/template" id="home">
+      <div id='modal-list-surveys'>
+        <h1>Surveys</h1>
+        <% _.each(surveys, function(d) { %>
+            <h2><a href='#surveys/<%= d.id %>'><%= d.name %></a> </h2>
+        <% }); %>
+      </div>
+    </script>
+    
+    <!-- Survey view ......................................................-->
+    <script type="text/template" id="survey-view">
+      <header id="survey-header">
+        <div class="container">
+          <h2><%= survey.name %> </h2>
+        </div>
+      </header>
+      
+      <div id="content" class="container">
+        <div id="subnav" class="nav nav-tabs">
+        </div>
+      
+        <div id="body">
+        </div>   
+      </div>   
+    </script>
+    
+    <!-- Response view ....................................................-->
+    <script type="text/template" id="response-view">
+      <h3>Responses</h3>
+        
+      <div class="response-list">  
+      <div class="response">
+      <% _.each(responses, function(r) { %>
+          <h3><%= r.source.collector %></h3>
+          
+          <%= r.createdHumanized %>
+          <!--
+          <% _.each(r.responses, function(key, resp) { %>
+            <td><%= resp %></td>
+          <% }); %>
+          -->
+        </tr>
+      <% }); %>
+      </div>
+      </div>
+      
+      <div id="result-pagination"></div>
+    </script>
+    
+    <!-- Upload view ......................................................-->
+    <script type="text/template" id="upload-view">
+      <h3>Upload scanned paper forms</h3>
+      
+      <p>When you've scanned in the paper forms, you can upload them here.</p>
+      <p>Either click the button and select the files, or drag and drop them right onto the page!</p>
+      <div id="file-uploader"></div>
+      <div class="drop-area"></div>
+    </script>
+    
+    <!-- Scan view ........................................................-->
+    <script type="text/template" id="scan-view">
+      <h3>Scanned forms</h3>
+      <ul>
+        <% _.each(scans, function(scan) {  %>
+          <li>
+            <%= scan.filename %>
+            <span class="label"><%= scan.status %></span>
+            <%= scan.created %>
+          </li>
+        <% }); %>
+      </ul>
+    </script>
+    
+    <!-- Subnav view ......................................................-->
+    <script type="text/template" id="subnav-view">
+    <% _.each(items, function(item) {  %>
+      <li class="<%= item.active %> <%= item.icon %>"><a href="#<%= item.fragment %>"><%= item.title %></a></li>
+    <% }); %>
+    </script>
+    
+    <!-- Pagination view ..................................................-->
+    <script type="text/template" id="pagination-view">
+      <div class="pagination">
+        <ul>
+          <li><a href="#">Prev</a></li>          
+          <% _.each(_.range(1, pageCount + 1), function(page) { %>
+            <li class="pagination-item"><a href=""><%= page %></a></li>
+          <% }); %>
+          <li><a href="#">Next</a></li>
+        </ul>
+      </div>
+    </script>
+         
+    <script type="text/javascript" src="js/application.js"></script>
+    <!-- Models & router -->
+    <script type="text/javascript" src="js/models/surveys.js"></script>
+    <script type="text/javascript" src="js/models/responses.js"></script>
+    <script type="text/javascript" src="js/models/scans.js"></script>
+    <script type="text/javascript" src="js/routers/index.js"></script>
+    
+    <!-- Views -->
+    <script type="text/javascript" src="js/views/question.js"></script>
+    <script type="text/javascript" src="js/views/home.js"></script>
+    <script type="text/javascript" src="js/views/nav_view.js"></script>
+    <script type="text/javascript" src="js/views/survey_view.js"></script>
+    <script type="text/javascript" src="js/views/response_view.js"></script>
+    <script type="text/javascript" src="js/views/pagination_view.js"></script>
+    <script type="text/javascript" src="js/views/upload_view.js"></script>
+    <script type="text/javascript" src="js/views/scan_view.js"></script>
+
+    <!-- Root controls all: start here -->
+    <script type="text/javascript" src="js/views/root.js"></script>
+    <!--
+    <script type="text/javascript">
+        $(function() {
+            window.Everything = new NSB.views.Root();
+            Everything.startRouting();
+        })
+    </script>
+    -->
+    <script type="text/javascript" src="js/builder.js"></script>
+    
+    
+</body>
+</html>
