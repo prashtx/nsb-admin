@@ -30,28 +30,37 @@
 
 
 /* Preview sidebar ------------- */
+
 #preview-sidebar {
   position: absolute;
-  top: 400px;
-  right: 0;
-  height: 20px;
-  border: 1px dashed #000;
-  border-top: 4px solid #000;
-  padding: 5px;
-  -webkit-transform: rotate(-90deg);
-  -webkit-transform-origin: bottom right;
-  -moz-transform: rotate(-90deg);
-  -moz-transform-origin: bottom right;
+  top: 200px;
+  right: -80px;
+  width: 120px;
+  font-family: Montserrat, sans-serif;
+  text-transform: uppercase;
+  font-size: 12px;
+  color: #fff;
+  line-height: 125%;
+	background: #F35351 url(../img/preview-plus.png) no-repeat left;
 }
 
-#preview-sidebar.highlight {
-  background: #d0d0f0;
-  top: 398px;
-  right: -1px;
-  height: 20px;
-  padding: 5px;
-  border: 2px solid #000;
-  border-top: 4px solid #000;
+#preview-sidebar p {
+	padding: 15px 0 15px 43px;
+}
+
+#preview-sidebar:hover {
+	position: absolute;
+	display: block;
+	top: 200px;
+	right: 0;
+	width: 120px;
+	font-family: Montserrat, sans-serif;
+	text-transform: uppercase;
+	font-size: 12px;
+	color: #fff;
+	line-height: 125%;
+	background: #F35351 url(../img/preview-plus.png) no-repeat left;
+	float: right;	
 }
 
 /* Progress indicator ---------- */
