@@ -116,6 +116,62 @@ h3 {
 	padding: 30px;
 }
 
+/* Pagination style from Bootstrap .........................................*/
+
+.pagination {
+  height: 40px;
+  margin: 0;
+}
+.pagination ul {
+  display: inline-block;
+  font-family: Montserrat, sans-serif;
+  font-size: 12px;
+  text-transform: uppercase;
+  background-color: #e9f0f1;
+  width: 100%;
+  text-align: center;
+}
+.pagination li {
+  display: inline-block;
+  border-right: 1px solid #d9dfe2;
+}
+.pagination li.nodivider {
+	border-right: none;
+}
+.pagination a,
+.pagination span {
+  float: left;
+  padding: 0 21px 0 18px;
+  line-height: 38px;
+  text-decoration: none;
+  border-left-width: 0;
+  color: #6a7e7a;
+}
+.pagination a:hover,
+.pagination .active a,
+.pagination .active span {
+  background-color: #fff;
+}
+.pagination .active a,
+.pagination .active span {
+  color: #999999;
+  cursor: default;
+}
+.pagination .disabled span,
+.pagination .disabled a,
+.pagination .disabled a:hover {
+  color: #999999;
+  background-color: transparent;
+  cursor: default;
+}
+.pagination-centered {
+  text-align: center;
+}
+.pagination-right {
+  text-align: right;
+}
+
+
 /* Header ..................................................................*/
 header {
   color:#fefefe;
