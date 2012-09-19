@@ -123,6 +123,14 @@ h3 {
 	background: #44A9BA;
 }
 
+#footer-text {
+	float: left;
+	font-family: "Source Sans Pro", sans-serif;
+	font-size: 11px;
+	color: #949596;
+	padding-top: 15px;
+}
+
 /* Pagination style from Bootstrap .........................................*/
 
 .pagination {
