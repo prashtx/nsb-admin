@@ -315,13 +315,15 @@
   function renderPreview() {
     var boxTemplate = u.template($('#t-preview-questions-container').html());
     var questionTemplate = u.template($('#t-preview-question').html());
+    var titleTemplate = u.template($('#t-preview-title').html());
+    var nameTemplate = u.template($('#t-preview-name').html());
 
     var letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
     function walkActive(questions, depth, condition) {
       if (questions === undefined || questions === null || questions.length === 0) {
         return null;
       }
-      
+
       var boxData = {
         depth: depth,
         condition: null
@@ -331,47 +333,47 @@
       }
       var box = $(boxTemplate(boxData));
 
-      var contents = u.reduce(questions, function (questionSet, question) {
-        if (!question.active) {
-          return questionSet;
-        }
-
+      var contents = u.map(u.filter(questions, function (question) { return question.active; }),
+                              function (question) {
         var $question = $(questionTemplate({
           prompt: question.text,
           answers: u.pluck(question.answers, 'text'),
           letters: letters
         }));
 
-        var subQuestions = u.reduce(question.answers, function (memo, answer, i) {
+        var subQuestions = u.filter(u.map(question.answers, function (answer, i) {
           if (answer.questions === undefined) {
-            return memo;
+            return null;
           }
+
           var sub = walkActive(answer.questions, depth + 1, letters[i]);
+          return sub;
+        }), function (item) { return item !== null; });
 
-          // If none of the questions are active, move on.
-          if (sub === null) {
-            return memo;
-          }
-          return memo.concat([sub]);
-        }, []);
+        $question = u.reduce(subQuestions, function (memo, $sub) {
+          return memo.add($sub);
+        }, $question);
 
-        u.forEach(subQuestions, function ($sub) { $question.append($sub); });
-
-        return questionSet.concat([$question]);
-      }, []);
+        return $question;
+      });
 
       // If there are no active questions, don't create an empty container.
       if (contents.length === 0) {
         return null;
       }
 
-      u.forEach(contents, function ($el) { box.append($el); });
+      box.append(u.reduce(contents, function (memo, $el) {
+        return memo.add($el);
+      }, $()));
       return box;
     }
 
     var $preview = $('#preview');
     $preview.empty();
+    $preview.append(titleTemplate());
+    $preview.append(nameTemplate({name: 'Big bird wants to know, why you hatin\'?'}));
     $preview.append(walkActive(app.allSurveyQuestions, 0));
+    $('#preview-dimmer').show();
   }
 
   $('#preview-sidebar').click(function (e) {

@@ -40,7 +40,7 @@
 	        	<a href="#"><div class="progress-bar"><p>Progression!</p></div></a>
 	        	<a href="#"><div class="progress-bar"><p>OMG Progress</p></div></a>
 	        	<div class="help">
-	        		<a href="#"><div class="help-icons">
+	        		<a href="#"><div id="save" class="help-icons">
 	        			<img src="img/icon_save.png" />Save your progress
 	        		</div></a>
 	        		<a href="#"><div class="help-icons">	
@@ -95,9 +95,6 @@
 		<h3>You have not answered this question.</h3>
 	</div>
 
-  <div id="preview">
-  </div>
-	
 	<div id="footer-outer">
 		<div id="footer">
 			<div class="row">
@@ -108,9 +105,12 @@
 					<div id="footer-text">Logos or lots of Lorem ipsum can go here. dolor sit amet, consectetur adipiscing elit. Fusce fringilla nulla ut mauris tempus vitae hendrerit nisi pulvinar. Duis mi elit, feugiat eu dictum eget, porta ut nulla. <br /><br /> Githuuuubbbbbbb open source githubbbb link.
 					</div>
 				</div>
-		</div>
+      </div>
+    </div>
 	</div>
-	</div>
+  <div id="preview-dimmer"></div>
+  <div id="preview"></div>
+	
 	    
 	    <!-- Core scripts -->
 	    <script type="text/javascript" src="js/lib/jquery-1.7.1.js"></script>    
@@ -135,7 +135,12 @@
         <a href="#"><div class="progress-bar" data-active="<%= active %>"><p><%= label %></p></div></a>
       </script>
 
-
+      <script type="text/template" id="t-preview-title">
+        <div id="preview-title">Previewing...</div>
+      </script>
+      <script type="text/template" id="t-preview-name">
+        <div id="preview-name">Survey: <%= name %></div>
+      </script>
       <script type="text/template" id="t-preview-questions-container">
         <div class="preview-q-box depth-<%= depth %>">
         <% if (condition !== null) { %>
@@ -146,10 +151,12 @@
         </div>
       </script>
       <script type="text/template" id="t-preview-question">
-        <div class="question-prompt">
-          <%= prompt %>
+        <div class="preview-question">
+          <div class="question-prompt">
+            <b><%= prompt %></b>
+          </div>
+          <% _.each(answers, function (answer, i) { %> <div class="preview-answer"> <%= letters[i] %>: <%= answer %> </div> <% }); %>
         </div>
-        <% _.each(answers, function (answer, i) { %> <div class="preview-answer"> <%= letters[i] %>: <%= answer %> </div> <% }); %>
       </script>
 	    <!-- Question .........................................................-->
 	    <script type="text/template" id="t-question">
